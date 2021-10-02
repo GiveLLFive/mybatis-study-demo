@@ -40,23 +40,6 @@ public class MybatisDemo {
         configuration.addMapper(BlogMapper.class);
 
     }
-
-    @Test
-    public void baseMapperTest() {
-        // 第二步：通过 SqlSessionFactoryBuilder.build 构建 SqlSessionFactory 工厂
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-        // 第三步：通过 SqlSessionFactory 工厂创建一个 SqlSession
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            // 第四步：从 session 中拿到 BlogMapper 的代理对象
-            BlogMapper mapper = session.getMapper(BlogMapper.class);
-            // 第五步：代理对象通过反射进行动态代理，最后得到返回结果
-            Blog blog = mapper.selectBlog(1);
-            System.out.println(blog);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void pageHelperMapperTest() {
         /** 很重要的一步：采用编程式的方式添加拦截器*/
@@ -65,14 +48,16 @@ public class MybatisDemo {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         // 第三步：通过 SqlSessionFactory 工厂创建一个 SqlSession
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            // 第四步：添加拦截器需要的参数，count 参数代表是否需要查询满足条件的所有行数，为了方便比较，这里设置为 true
-            Page page = PageHelper.startPage(1, 1, true);
+            // 第四步：添加拦截器需要的参数，count 参数代表是否需要查询满足条件的所有行数，为防止打断点的时候受到干扰，这里设置为 false
+            Page page = PageHelper.startPage(1, 1, false);
             // 第五步：从 session 中拿到 BlogMapper 的代理对象
             BlogMapper mapper = session.getMapper(BlogMapper.class);
             // 第六步：代理对象通过反射进行动态代理，最后得到返回结果
-            List<Blog> list = mapper.listByKeyword("水");
-            System.out.println("分页之后查询出来的行数：" + list.size());
-            System.out.println("满足条件的所有行数：" + page.getTotal());
+            List<Blog> hasPageList = mapper.listByKeyword("水");
+            System.out.println("分页之后查询的行数：" + hasPageList.size());
+            // 对比结果：代理对象通过反射进行动态代理，最后得到返回结果
+            List<Blog> noPageList = mapper.listByKeyword("水");
+            System.out.println("未分页查询的行数：" + noPageList.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
