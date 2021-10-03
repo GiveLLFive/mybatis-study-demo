@@ -89,8 +89,8 @@ public class MybatisDemoTest {
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         // mysql 数据库用户名
         dataSource.setUsername("root");
-        // mysql 数据库连接地址
-        dataSource.setPassword("L143426l");
+        // todo mysql 自定义的密码
+        dataSource.setPassword("123456");
         return dataSource;
     }
 

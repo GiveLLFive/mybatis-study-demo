@@ -15,7 +15,8 @@ public class DataSourceConfig {
         dataSource.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=true&userSSL=false&characterEncoding=utf8&serverTimezone=UTC");
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUsername("root");
-        dataSource.setPassword("L143426l");
+        // todo mysql 自定义的密码
+        dataSource.setPassword("123456");
         return dataSource;
     }
 
