@@ -22,7 +22,7 @@ import java.util.List;
  * @author lilei
  * @since 2021/10/1
  */
-public class MybatisDemo {
+public class MybatisDemoTest {
 
     private Configuration configuration;
 

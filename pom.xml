@@ -17,6 +17,7 @@
 
     <modules>
         <module>mybatis-demo</module>
+        <module>mybatis-spring-demo</module>
     </modules>
 
     <properties>
